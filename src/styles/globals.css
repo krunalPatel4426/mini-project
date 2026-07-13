@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Great+Vibes&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Gujarati:wght@300;400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  /* FIX: 'hidden' forces the browser to also compute overflow-y as 'auto',
+     which turns <html> into its own scroll container and breaks
+     position:sticky reliability on iOS Safari. 'clip' hides x-overflow
+     without that side effect. */
+  overflow-x: clip;
+  background-color: #0f0206;
+  /* Fallback deep dark pink/black */
+}
+
+body {
+  color: #fff1f2;
+  font-family: 'Inter', sans-serif;
+  /* FIX: same reasoning as html above — use clip, not hidden. */
+  overflow-x: clip;
+  min-height: 100vh;
+}
+
+/* Glassmorphism Classes */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
+.glass-romantic {
+  background: rgba(190, 24, 93, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(219, 39, 119, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(190, 24, 93, 0.2);
+}
+
+.glass-gold {
+  background: rgba(238, 242, 39, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(238, 242, 39, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(238, 242, 39, 0.1);
+}
+
+.glass-orange {
+  background: rgba(255, 107, 0, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 107, 0, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(255, 107, 0, 0.15);
+}
+
+/* Text Glow Effects */
+.text-glow-gold {
+  text-shadow: 0 0 8px rgba(238, 242, 39, 0.8), 0 0 16px rgba(238, 242, 39, 0.4);
+}
+
+.text-glow-pink {
+  text-shadow: 0 0 10px rgba(219, 39, 119, 0.8), 0 0 20px rgba(219, 39, 119, 0.4);
+}
+
+.text-glow-orange {
+  text-shadow: 0 0 8px rgba(255, 107, 0, 0.8), 0 0 16px rgba(255, 107, 0, 0.4);
+}
+
+.text-glow-white {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6), 0 0 16px rgba(255, 255, 255, 0.3);
+}
+
+/* 3D Envelope Styles */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Sound Wave Animation */
+.visualizer-bar {
+  animation: bounce-bar 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes bounce-bar {
+  0% {
+    transform: scaleY(0.15);
+  }
+
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+/* Mesh Backdrop gradient */
+.mesh-gradient-bg {
+  background-color: #000000;
+  background-image:
+    radial-gradient(at 10% 10%, rgba(190, 24, 93, 0.18) 0px, transparent 50%),
+    radial-gradient(at 90% 15%, rgba(255, 107, 0, 0.15) 0px, transparent 40%),
+    radial-gradient(at 50% 85%, rgba(238, 242, 39, 0.12) 0px, transparent 50%),
+    radial-gradient(at 80% 80%, rgba(190, 24, 93, 0.15) 0px, transparent 45%);
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+/* Custom Scrollbar for desktop */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f0206;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #881337;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #f43f5e;
+}
