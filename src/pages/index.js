@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence, useTransform, useScroll, useMotionValueEvent } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Heart } from 'lucide-react';
+import { Heart, X } from 'lucide-react';
 
 const photos = [
   { id: 1, src: '/Akshu/1.jpg', caption: 'Your breathtaking smile... ✨' },
@@ -709,12 +709,19 @@ export default function Home() {
           >
             <div className="bg-gradient-to-br from-[#120207] via-black to-[#050505] border border-pink-500/30 p-8 sm:p-12 rounded-3xl text-center max-w-md w-full shadow-2xl space-y-6 relative">
 
+              <button 
+                onClick={() => setFinalLetterVisible(false)}
+                className="absolute top-4 right-4 text-zinc-500 hover:text-pink-500 transition-colors z-10"
+              >
+                <X className="w-6 h-6" />
+              </button>
+
               <div className="w-20 h-20 bg-pink-500/10 rounded-full border border-pink-500/20 flex items-center justify-center mx-auto shadow-[0_0_20px_rgba(219,39,119,0.4)]">
                 <Heart className="w-10 h-10 text-pink-500 fill-pink-500" />
               </div>
 
               <h3 className="font-title text-3xl sm:text-4xl font-bold text-yellow-400 drop-shadow-[0_0_12px_rgba(250,204,21,0.5)]">
-                My Promise To You ❤️
+                Happy Birthday to you ❤️
               </h3>
 
               <div className="font-cursive text-2xl text-zinc-100 leading-relaxed text-center select-text max-h-48 overflow-y-auto no-scrollbar px-1">
@@ -722,7 +729,7 @@ export default function Home() {
                 <br /><br />
                 I love you more than words can express. You are my sunshine, my dream, and my favorite routine.
                 <br />
-                May this year bring you endless laughs and gorgeous smiles. I will be by your side forever.
+                May this year bring you endless laughs and gorgeous smiles. Maa kalka always bless you. I will be by your side forever.
                 <br /><br />
                 Happy Birthday! 🎂🥳💐
               </div>
