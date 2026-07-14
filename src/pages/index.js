@@ -710,7 +710,10 @@ export default function Home() {
             <div className="bg-gradient-to-br from-[#120207] via-black to-[#050505] border border-pink-500/30 p-8 sm:p-12 rounded-3xl text-center max-w-md w-full shadow-2xl space-y-6 relative">
 
               <button 
-                onClick={() => setFinalLetterVisible(false)}
+                onClick={() => {
+                  setFinalLetterVisible(false);
+                  yesTappedRef.current = false;
+                }}
                 className="absolute top-4 right-4 text-zinc-500 hover:text-pink-500 transition-colors z-10"
               >
                 <X className="w-6 h-6" />
