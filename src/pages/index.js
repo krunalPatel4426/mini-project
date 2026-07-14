@@ -608,7 +608,7 @@ export default function Home() {
               {herWordsList.map((card, cIdx) => {
                 const isGuj = !!card.gujarati;
                 const textContent = isGuj ? card.gujarati : card.english;
-                const wordsOrChars = isGuj ? textContent.split("") : textContent.split(" ");
+                const wordsOrChars = isGuj ? textContent.split("") : textContent.replace(/\n/g, " \n ").split(" ");
 
                 return (
                   <motion.div
@@ -805,19 +805,23 @@ function InkBleedCard({ caption, wordsOrChars, isGuj }) {
             viewport={{ once: true }}
             className={`leading-relaxed text-zinc-100 ${isGuj ? 'font-gujarati text-lg sm:text-xl font-normal' : 'font-sans italic text-sm sm:text-lg'}`}
           >
-            {wordsOrChars.map((item, idx) => (
-              <motion.span
-                key={idx}
-                variants={{
-                  hidden: { opacity: 0, filter: "blur(4px)" },
-                  visible: { opacity: 1, filter: "blur(0px)" }
-                }}
-                className="inline-block whitespace-pre"
-              >
-                {item === " " ? "\u00A0" : item}
-                {!isGuj && "\u00A0"}
-              </motion.span>
-            ))}
+            {wordsOrChars.map((item, idx) => {
+              if (item === "\n") return <br key={idx} />;
+              if (item === "") return null;
+              return (
+                <motion.span
+                  key={idx}
+                  variants={{
+                    hidden: { opacity: 0, filter: "blur(4px)" },
+                    visible: { opacity: 1, filter: "blur(0px)" }
+                  }}
+                  className="inline-block whitespace-pre"
+                >
+                  {item === " " ? "\u00A0" : item}
+                  {!isGuj && "\u00A0"}
+                </motion.span>
+              );
+            })}
           </motion.div>
 
           <p className="text-right text-xs uppercase tracking-widest text-amber-300 font-bold">
