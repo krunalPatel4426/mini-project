@@ -1,26 +1,24 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence, useTransform, useScroll, useMotionValueEvent } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Heart, X, Volume2, VolumeX } from 'lucide-react';
+import { Heart } from 'lucide-react';
 
 const photos = [
   { id: 1, src: '/Akshu/1.jpg', caption: 'Your breathtaking smile... ✨' },
   { id: 2, src: '/Akshu/2.jpg', caption: 'Every moment with you is a dream. 💖' },
-  { id: 3, src: '/Akshu/3.jpg', caption: 'My absolute favorite view ❤️' },
-  { id: 4, src: '/Akshu/4.jpg', caption: 'You light up my entire world 🌟' },
-  { id: 5, src: '/Akshu/5.jpg', caption: 'That gorgeous look in your eyes... 👀' },
+  { id: 4, src: '/Akshu/4.png', caption: 'You light up my entire world 🌟' },
+  { id: 5, src: '/Akshu/5.png', caption: 'That gorgeous look in your eyes... 👀' },
   { id: 6, src: '/Akshu/6.jpg', caption: 'My heart beats only for you. 💓' },
-  { id: 7, src: '/Akshu/7.jpg', caption: 'Simply stunning in every way. ✨' },
-  { id: 8, src: '/Akshu/8.jpg', caption: 'The prettiest girl in the universe 🌸' },
+  { id: 8, src: '/Akshu/8.png', caption: 'The prettiest girl in the universe 🌸' },
   { id: 9, src: '/Akshu/9.jpg', caption: 'Forever and always, you and me. 🔒' },
   { id: 10, src: '/Akshu/10.jpg', caption: 'My daily dose of happiness. 😊' },
-  { id: 11, src: '/Akshu/11.jpg', caption: 'Captured perfection 📸' },
+  { id: 11, src: '/Akshu/11.png', caption: 'Captured perfection 📸' },
   { id: 12, src: '/Akshu/12.jpg', caption: 'You are my sunshine ☀️' },
   { id: 13, src: '/Akshu/13.jpg', caption: 'Looking absolutely magical ✨' },
   { id: 14, src: '/Akshu/14.jpg', caption: 'Your laugh is my favorite song 🎵' },
-  { id: 15, src: '/Akshu/15.jpg', caption: 'My forever valentine ❤️' },
-  { id: 16, src: '/Akshu/16.jpg', caption: 'You make my soul happy. 🌈' },
-  { id: 17, src: '/Akshu/17.jpg', caption: 'The girl who stole my heart 💘' }
+  { id: 15, src: '/Akshu/15.png', caption: 'My forever valentine ❤️' },
+  { id: 16, src: '/Akshu/16.png', caption: 'You make my soul happy. 🌈' },
+  { id: 17, src: '/Akshu/17.png', caption: 'The girl who stole my heart 💘' }
 ];
 
 const herWordsList = [
@@ -38,29 +36,6 @@ const herWordsList = [
   }
 ];
 
-const boxWishes = [
-  {
-    id: 1,
-    title: "A Sweet Promise 🔒",
-    boxColor: "from-pink-600 to-rose-700",
-    ribbonColor: "bg-[#eef227]",
-    message: "My Promise 🔒:\n\nNo matter where life takes us, I promise to hold your hand, guide us through the dark, and remind you of how incredibly special you are to me every single day. Happy Birthday, Akshu!"
-  },
-  {
-    id: 2,
-    title: "A Shared Dream ☁️",
-    boxColor: "from-orange-500 to-amber-600",
-    ribbonColor: "bg-white",
-    message: "My Dream ☁️:\n\nTo build a beautiful world with you, share quiet warm mornings, travel to the edge of the oceans, and fall in love with you over and over again."
-  },
-  {
-    id: 3,
-    title: "Your Happiness ☀️",
-    boxColor: "from-yellow-500 to-amber-500",
-    ribbonColor: "bg-pink-600",
-    message: "My Happiness ☀️:\n\nYour gorgeous laugh is the melody that makes my bad days vanish, and your smile is my bright sunshine. May you always stay happy, beautiful Akshu!"
-  }
-];
 
 function GalleryPhoto({ photo, i, total, scrollYProgress }) {
   // Each photo owns one equal slice of the total scroll range, so only the
@@ -109,7 +84,7 @@ function GalleryPhoto({ photo, i, total, scrollYProgress }) {
       }}
       className="absolute w-[280px] sm:w-[400px] bg-white p-4 pb-12 rounded-sm shadow-2xl border border-zinc-200 z-10"
     >
-      <div className="relative aspect-square w-full bg-zinc-950 overflow-hidden rounded-sm mb-4">
+      <div className="relative aspect-[3/4] w-full bg-zinc-950 overflow-hidden rounded-sm mb-4">
         <img
           src={photo.src}
           alt={`Memory ${photo.id}`}
@@ -228,15 +203,7 @@ export default function Home() {
   const [heartPulse, setHeartPulse] = useState(false);
   const [showHeroText, setShowHeroText] = useState(false);
 
-  // Audio setup
-  const audioRef = useRef(null);
-  const [audioPlaying, setAudioPlaying] = useState(false);
 
-  // Scene 5 (Gift boxes) states
-  const [shakingBoxId, setShakingBoxId] = useState(null);
-  const [openedBoxId, setOpenedBoxId] = useState(null);
-  const [activeScrollMessage, setActiveScrollMessage] = useState(null);
-  const [showScrollOverlay, setShowScrollOverlay] = useState(false);
 
   // Scene 6 (Dodge game) states
   const [noBtnPosition, setNoBtnPosition] = useState({ x: 0, y: 0 });
@@ -302,11 +269,6 @@ export default function Home() {
     // 3. Frame 800-1500ms: Glowing letter slides out, scales, envelope drops opacity to 0
     setTimeout(() => {
       setLetterVisible(true);
-      if (audioRef.current) {
-        audioRef.current.play()
-          .then(() => setAudioPlaying(true))
-          .catch(() => console.log("Audio blocked. Autoplay resolved via interaction."));
-      }
     }, 800);
 
     // 4. Frame 1500ms: Letter dissolves, pitch-black background transitions to gradient
@@ -342,46 +304,7 @@ export default function Home() {
     };
   }, [scene]);
 
-  // Scene 5: Tap gift box sequence
-  const handleTapBox = (id, event, message) => {
-    if (shakingBoxId || openedBoxId) return;
 
-    // Capture the rect NOW before the synthetic event is recycled
-    const rect = event.currentTarget.getBoundingClientRect();
-
-    // Frame 0-400ms: Box violently shakes
-    setShakingBoxId(id);
-    playSynthNote();
-
-    setTimeout(() => {
-      setShakingBoxId(null);
-      setOpenedBoxId(id);
-
-      // Frame 500ms: Localized confetti burst from top of the box
-      const originX = (rect.left + rect.width / 2) / window.innerWidth;
-      const originY = rect.top / window.innerHeight;
-      confetti({
-        particleCount: 60,
-        spread: 50,
-        origin: { x: originX, y: originY },
-        colors: ['#db2777', '#eef227', '#ffffff']
-      });
-
-      // Frame 600ms+: Background dims, golden scroll rises
-      setTimeout(() => {
-        setActiveScrollMessage(message);
-        setShowScrollOverlay(true);
-      }, 300);
-
-    }, 450);
-  };
-
-  const handleCloseScroll = () => {
-    setShowScrollOverlay(false);
-    setActiveScrollMessage(null);
-    setOpenedBoxId(null);
-    setShakingBoxId(null);
-  };
 
   // Scene 6: Dodge NO button
   const handleNoDodge = () => {
@@ -463,45 +386,14 @@ export default function Home() {
     }, 600);
   };
 
-  const toggleAudio = () => {
-    if (!audioRef.current) return;
-    if (audioPlaying) {
-      audioRef.current.pause();
-      setAudioPlaying(false);
-    } else {
-      audioRef.current.play()
-        .then(() => setAudioPlaying(true))
-        .catch(err => console.log(err));
-    }
-  };
+
 
   if (!mounted) return null;
 
   return (
     <div className="relative min-h-screen bg-black text-white selection:bg-pink-600 selection:text-white font-sans">
 
-      {/* Background audio */}
-      <audio
-        ref={audioRef}
-        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-        loop
-      />
 
-      {/* Floating Audio Controller */}
-      {scene > 1 && (
-        <div className="fixed bottom-6 right-6 z-40">
-          <button
-            onClick={toggleAudio}
-            className="w-12 h-12 bg-black/60 border border-pink-500/40 rounded-full flex items-center justify-center shadow-lg hover:border-pink-500 transition-colors pointer-events-auto"
-          >
-            {audioPlaying ? (
-              <Volume2 className="w-6 h-6 text-pink-500 animate-pulse" />
-            ) : (
-              <VolumeX className="w-6 h-6 text-zinc-500" />
-            )}
-          </button>
-        </div>
-      )}
 
       {/* SCENE 1: The Envelope & The Awakening */}
       <AnimatePresence>
@@ -733,82 +625,6 @@ export default function Home() {
             </div>
           </section>
 
-          {/* SCENE 5: The Gift Boxes (Cinematic Unwrap) */}
-          <section className="py-24 w-full max-w-4xl border-t border-zinc-900/60 text-center">
-
-            <div className="mb-16 space-y-4">
-              <h2 className="font-title text-3xl sm:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-orange-400">
-                Unwrap My Wishes
-              </h2>
-              <p className="font-cursive text-xl sm:text-3xl text-yellow-300">
-                Tap each box to unlock its golden scroll... 🎁
-              </p>
-            </div>
-
-            {/* Gift Grid */}
-            <div className="flex flex-wrap justify-center gap-12 sm:gap-16 px-4">
-              {boxWishes.map((box) => {
-                const isShaking = shakingBoxId === box.id;
-                const isOpen = openedBoxId === box.id;
-
-                return (
-                  <div
-                    key={box.id}
-                    onClick={(e) => handleTapBox(box.id, e, box.message)}
-                    style={{ zIndex: (isShaking || isOpen) ? 50 : 10 }}
-                    className="relative w-48 h-48 flex flex-col items-center justify-end cursor-pointer group select-none"
-                  >
-                    {/* Lid */}
-                    <motion.div
-                      animate={isShaking ? {
-                        x: [-10, 10, -10, 10, 0],
-                        transition: { duration: 0.4 }
-                      } : isOpen ? {
-                        y: -80,
-                        rotate: 45,
-                        opacity: 0,
-                        transition: { duration: 0.3 }
-                      } : {
-                        y: 0,
-                        rotate: 0,
-                        opacity: 1
-                      }}
-                      className={`absolute bottom-20 w-36 h-8 bg-gradient-to-r ${box.boxColor} rounded-md shadow-md z-20`}
-                    >
-                      {/* Ribbon vertical */}
-                      <div className={`absolute top-0 bottom-0 left-1/2 transform -translate-x-1/2 w-4 ${box.ribbonColor}`} />
-                      {/* Bow Loops */}
-                      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 flex gap-1">
-                        <div className={`w-5 h-4 rounded-full border-2 border-white/20 ${box.ribbonColor}`} />
-                        <div className={`w-5 h-4 rounded-full border-2 border-white/20 ${box.ribbonColor}`} />
-                      </div>
-                    </motion.div>
-
-                    {/* Base Box */}
-                    <motion.div
-                      animate={isShaking ? {
-                        x: [-10, 10, -10, 10, 0],
-                        transition: { duration: 0.4 }
-                      } : isOpen ? {
-                        scale: 0.95
-                      } : {
-                        scale: 1
-                      }}
-                      className={`w-32 h-20 bg-gradient-to-r ${box.boxColor} rounded-b-md shadow-xl relative overflow-hidden z-10`}
-                    >
-                      {/* Ribbon vertical */}
-                      <div className={`absolute top-0 bottom-0 left-1/2 transform -translate-x-1/2 w-4 ${box.ribbonColor}`} />
-                      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                    </motion.div>
-
-                    <span className="absolute -bottom-8 text-xs font-bold uppercase tracking-widest text-zinc-500 transition-colors">
-                      {isOpen ? 'Opened 🌟' : 'Tap to Open 🎁'}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
 
           {/* SCENE 6: The Ultimate Tricky Question */}
           <section className="py-24 w-full max-w-3xl text-center border-t border-zinc-900/60 pb-44">
@@ -875,43 +691,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* SCENE 5 GOLDEN SCROLL OVERLAY — full-screen modal at root level */}
-      <AnimatePresence>
-        {showScrollOverlay && activeScrollMessage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center pointer-events-auto"
-            onClick={handleCloseScroll}
-          >
-            <motion.div
-              initial={{ scale: 0.3, y: 100 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.3, y: 100 }}
-              transition={{ type: "spring", stiffness: 100, damping: 15 }}
-              className="relative bg-gradient-to-br from-amber-100 to-yellow-200 text-zinc-950 p-6 sm:p-10 rounded-lg max-w-md w-[85%] aspect-[3/4.2] flex flex-col justify-between border-4 border-amber-600 shadow-[0_0_40px_rgba(251,191,36,0.8)]"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close Button */}
-              <button
-                onClick={handleCloseScroll}
-                className="absolute top-4 right-4 w-8 h-8 bg-zinc-800 hover:bg-zinc-700 text-white rounded-full flex items-center justify-center border border-zinc-600 hover:border-zinc-400 transition-colors z-10"
-              >
-                <X className="w-5 h-5" />
-              </button>
 
-              <div className="flex-1 flex flex-col justify-center items-center py-6">
-                <ScrollTypewriter text={activeScrollMessage} />
-              </div>
-
-              <div className="text-center font-cursive text-amber-900 border-t border-amber-300 pt-3 select-none text-xl sm:text-2xl">
-                With all my love... ❤️
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* PINK SCREEN FLASH overlay */}
       {flashPink && (
@@ -1046,28 +826,5 @@ function InkBleedCard({ caption, wordsOrChars, isGuj }) {
         </div>
       </div>
     </motion.div>
-  );
-}
-
-// SCROLL MESSAGE TYPEWRITER component
-function ScrollTypewriter({ text }) {
-  const [displayText, setDisplayText] = useState("");
-
-  useEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      setDisplayText(text.slice(0, index));
-      index++;
-      if (index > text.length) {
-        clearInterval(interval);
-      }
-    }, 25);
-    return () => clearInterval(interval);
-  }, [text]);
-
-  return (
-    <p className="font-cursive text-xl sm:text-2xl text-center leading-relaxed text-zinc-900 whitespace-pre-line px-2 font-bold">
-      {displayText}
-    </p>
   );
 }
